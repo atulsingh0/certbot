@@ -6,7 +6,7 @@ jobs:
       AWS_CERTBOT_IMAGE: atulsingh0/certbot-dns-route53
       GCP_CERTBOT_IMAGE: atulsingh0/certbot-dns-google
     docker:
-      - image: cimg/base
+      - image: cimg/base:stable
     steps:
       - checkout
       - setup_remote_docker

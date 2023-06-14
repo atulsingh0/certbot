@@ -62,3 +62,7 @@ daily-run-workflow:
           branches:
             only:
               - main
+      jobs:
+        - build:
+            context:
+              - cci-ctx

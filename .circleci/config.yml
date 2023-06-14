@@ -19,12 +19,11 @@ jobs:
       - run:
           name: Build Docker google-dns certbot image
           command: docker build -t $GCP_CERTBOT_IMAGE:latest -f Dockerfile-certbot-gcp .
-      - run:
-          name: docker tag
-          command: export IMAGE_TAG="0.1.$CIRCLE_BUILD_NUM"
+
       - run:
           name: Publish certbot Docker Image to Docker Hub
           command: |
+            IMAGE_TAG="0.1.$CIRCLE_BUILD_NUM"
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             docker tag $CERTBOT_IMAGE:latest $CERTBOT_IMAGE:$IMAGE_TAG
             docker push $CERTBOT_IMAGE:latest
@@ -32,6 +31,7 @@ jobs:
       - run:
           name: Publish dns-route53 certbot Docker Image to Docker Hub
           command: |
+            IMAGE_TAG="0.1.$CIRCLE_BUILD_NUM"
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             docker tag $AWS_CERTBOT_IMAGE:latest $AWS_CERTBOT_IMAGE:$IMAGE_TAG
             docker push $AWS_CERTBOT_IMAGE:latest
@@ -39,6 +39,7 @@ jobs:
       - run:
           name: Publish google-dns certbot Docker Image to Docker Hub
           command: |
+            IMAGE_TAG="0.1.$CIRCLE_BUILD_NUM"
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             docker tag $CERTBOT_IMAGE:latest $CERTBOT_IMAGE:$IMAGE_TAG
             docker push $CERTBOT_IMAGE:latest

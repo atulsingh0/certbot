@@ -7,9 +7,12 @@ jobs:
       GCP_CERTBOT_IMAGE: atulsingh0/certbot-dns-google
     docker:
       - image: cimg/base:stable
+    resource_class: small
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.18
+          docker_layer_caching: true
       - run:
           name: Build Docker certbot image
           command: docker build -t $CERTBOT_IMAGE:latest -f Dockerfile-certbot .
@@ -41,9 +44,9 @@ jobs:
           command: |
             IMAGE_TAG="0.1.$CIRCLE_BUILD_NUM"
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-            docker tag $CERTBOT_IMAGE:latest $CERTBOT_IMAGE:$IMAGE_TAG
-            docker push $CERTBOT_IMAGE:latest
-            docker push $CERTBOT_IMAGE:$IMAGE_TAG
+            docker tag $GCP_CERTBOT_IMAGE:latest $GCP_CERTBOT_IMAGE:$IMAGE_TAG
+            docker push $GCP_CERTBOT_IMAGE:latest
+            docker push $GCP_CERTBOT_IMAGE:$IMAGE_TAG
 
 workflows:
   version: 2

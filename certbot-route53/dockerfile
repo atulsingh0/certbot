@@ -1,0 +1,21 @@
+FROM alpine:3.18.2
+LABEL email=pocnme@yahoo.com
+
+RUN apk add --update --no-cache --virtual=run-deps \
+    openssl \
+    ca-certificates \
+    py-dnspython \
+    certbot \
+    tzdata \
+    py3-pip
+RUN pip install certbot-dns-route53
+
+WORKDIR /
+VOLUME /etc/letsencrypt
+
+COPY scripts/ /tmp
+RUN mkdir /root/certbot-route53 \
+    && cp /tmp/*.sh /root/certbot-route53/ \
+    && chmod +x /root/certbot-route53/*.sh
+
+CMD ["/root/certbot-route53/generate.sh"]

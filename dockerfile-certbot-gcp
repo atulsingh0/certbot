@@ -1,0 +1,10 @@
+FROM certbot/dns-google
+
+ENV DOMAINS=""
+ENV EMAIL=""
+ENV GOOGLE_CREDS=""
+
+VOLUME /etc/letsencrypt
+VOLUME /var/www/certbot
+
+ENTRYPOINT if [ ! -f "/etc/letsencrypt/live/$DOMAIN/fullchain.pem" ]; then echo "processing cert for domain $DOMAIN and if any additional domain $ANDWILDCARD ..." ; certbot -t certonly --dns-route53 --agree-tos --non-interactive -w /var/www/certbot -m ${EMAIL} -d $DOMAIN $ANDWILDCARD -v; else echo "Certs for $DOMAIN is already exists, hence skipping generation."; fi

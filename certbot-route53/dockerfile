@@ -12,9 +12,10 @@ RUN pip install certbot-dns-route53
 
 WORKDIR /
 VOLUME /etc/letsencrypt
+VOLUME /var/www/certbot
 
 COPY scripts/ /tmp
-RUN mkdir /root/certbot-route53 \
+RUN mkdir -p /root/certbot-route53 \
     && cp /tmp/*.sh /root/certbot-route53/ \
     && chmod +x /root/certbot-route53/*.sh
 

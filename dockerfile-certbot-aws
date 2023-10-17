@@ -1,8 +1,12 @@
 FROM certbot/dns-route53
 
-ENV DOMAIN=""
-ENV EMAIL=""
-ENV ANDWILDCARD=""
+#DOMAIN=example.com
+#EMAIL=user@example.com
+#ANDWILDCARD="-d dl.example.com -d as.example.com -d ab.example.com"
+
+ENV DOMAIN=""   
+ENV EMAIL=""    
+ENV ANDWILDCARD="" 
 
 VOLUME /etc/letsencrypt
 VOLUME /var/www/certbot
